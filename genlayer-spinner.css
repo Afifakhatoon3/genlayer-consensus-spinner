@@ -1,0 +1,43 @@
+.genlayer-spinner {
+  --spinner-size: 24px;
+
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+
+  display: inline-block;
+  line-height: 0;
+
+  color: #ffffff;
+}
+
+.genlayer-spinner svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Light background */
+.genlayer-spinner.is-light {
+  color: #17131f;
+}
+
+/* Size variants */
+.genlayer-spinner--16 {
+  --spinner-size: 16px;
+}
+
+.genlayer-spinner--20 {
+  --spinner-size: 20px;
+}
+
+.genlayer-spinner--24 {
+  --spinner-size: 24px;
+}
+
+.genlayer-spinner--32 {
+  --spinner-size: 32px;
+}
+
+.genlayer-spinner--48 {
+  --spinner-size: 48px;
+}
