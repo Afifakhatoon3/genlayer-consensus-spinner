@@ -1,0 +1,155 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 64"
+  role="img"
+  aria-label="GenLayer loading spinner"
+>
+  <defs>
+    <linearGradient id="genlayer-gradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#B78CFF"/>
+      <stop offset="100%" stop-color="#6D3DFF"/>
+    </linearGradient>
+
+    <filter id="soft-glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Subtle orbit -->
+  <circle
+    cx="32"
+    cy="32"
+    r="22"
+    fill="none"
+    stroke="currentColor"
+    stroke-opacity=".14"
+    stroke-width="1"
+  />
+
+  <!-- Validator network -->
+  <g
+    class="genlayer-ring"
+    transform-origin="32px 32px"
+    filter="url(#soft-glow)"
+  >
+    <!-- Moving orbit -->
+    <circle
+      cx="32"
+      cy="32"
+      r="22"
+      fill="none"
+      stroke="url(#genlayer-gradient)"
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-dasharray="31 107"
+    />
+
+    <!-- Validator nodes -->
+    <circle cx="32" cy="10" r="3.2" fill="#B78CFF"/>
+    <circle cx="51.05" cy="43" r="3.2" fill="#8B5CFF"/>
+    <circle cx="12.95" cy="43" r="3.2" fill="#C9B0FF"/>
+  </g>
+
+  <!-- GenLayer-inspired core -->
+  <g class="genlayer-core">
+
+    <!-- Outer geometric shape -->
+    <path
+      d="M32 16.5
+         L45 24
+         V34.5
+         L32 42
+         L19 34.5
+         V24
+         Z"
+      fill="none"
+      stroke="url(#genlayer-gradient)"
+      stroke-width="3.2"
+      stroke-linejoin="round"
+    />
+
+    <!-- Consensus mark -->
+    <path
+      d="M25.2 29.2
+         L32 33.1
+         L38.8 29.2"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="3.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Lower layer -->
+    <path
+      d="M22.8 36.7
+         L32 42
+         L41.2 36.7"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      opacity=".72"
+    />
+
+  </g>
+
+  <style>
+    .genlayer-ring {
+      animation:
+        consensus-spin
+        1.8s
+        cubic-bezier(.55,.05,.25,.95)
+        infinite;
+    }
+
+    .genlayer-core {
+      transform-origin: 32px 32px;
+      animation:
+        consensus-pulse
+        1.8s
+        cubic-bezier(.4,0,.2,1)
+        infinite;
+    }
+
+    @keyframes consensus-spin {
+      0% {
+        transform: rotate(0deg);
+        opacity: .72;
+      }
+
+      45% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: rotate(360deg);
+        opacity: .72;
+      }
+    }
+
+    @keyframes consensus-pulse {
+      0%, 100% {
+        transform: scale(.94);
+        opacity: .82;
+      }
+
+      48%, 58% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .genlayer-ring,
+      .genlayer-core {
+        animation: none;
+      }
+    }
+  </style>
+</svg>
