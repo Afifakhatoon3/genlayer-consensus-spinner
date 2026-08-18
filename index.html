@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>GenLayer Consensus Spinner</title>
+
+  <link rel="stylesheet" href="genlayer-spinner.css" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+
+      background: #09070f;
+      color: #ffffff;
+    }
+
+    .container {
+      display: flex;
+      gap: 64px;
+      align-items: center;
+      padding: 48px;
+    }
+
+    .preview {
+      padding: 56px;
+
+      border-radius: 24px;
+
+      background: #100d18;
+      border: 1px solid #272031;
+    }
+
+    .preview.light {
+      background: #f7f5fb;
+      color: #17131f;
+    }
+
+    .hero-spinner {
+      --spinner-size: 96px;
+    }
+
+    .sizes {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <!-- Dark Mode -->
+    <section class="preview">
+
+      <div class="genlayer-spinner hero-spinner">
+        <img
+          src="genlayer-spinner.svg"
+          alt="GenLayer loading spinner"
+        />
+      </div>
+
+      <div class="sizes">
+
+        <div class="genlayer-spinner genlayer-spinner--16">
+          <img src="genlayer-spinner.svg" alt="" />
+        </div>
+
+        <div class="genlayer-spinner genlayer-spinner--20">
+          <img src="genlayer-spinner.svg" alt="" />
+        </div>
+
+        <div class="genlayer-spinner genlayer-spinner--24">
+          <img src="genlayer-spinner.svg" alt="" />
+        </div>
+
+        <div class="genlayer-spinner genlayer-spinner--32">
+          <img src="genlayer-spinner.svg" alt="" />
+        </div>
+
+        <div class="genlayer-spinner genlayer-spinner--48">
+          <img src="genlayer-spinner.svg" alt="" />
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Light Mode -->
+    <section class="preview light">
+
+      <div class="genlayer-spinner hero-spinner is-light">
+        <img
+          src="genlayer-spinner.svg"
+          alt="GenLayer loading spinner"
+        />
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
