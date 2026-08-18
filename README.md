@@ -1,4 +1,4 @@
-# GenLayer Consensus Spinner
+## GenLayer Consensus Spinner
 
 A professional community-designed animated loading spinner for the GenLayer Portal.
 
