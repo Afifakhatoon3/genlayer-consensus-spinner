@@ -2,10 +2,6 @@
 
 A professional community-designed animated loading spinner for the GenLayer Portal.
 
-## Live Demo
-
-https://afifakhatoon3.github.io/genlayer-spinner/
-
 ## Concept
 
 The spinner represents an active GenLayer consensus process.
