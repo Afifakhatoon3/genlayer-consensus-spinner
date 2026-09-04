@@ -1,25 +1,50 @@
-## GenLayer Consensus Spinner
+# GenLayer Portal - Loading Experience
 
-A professional community-designed animated loading spinner for the GenLayer Portal.
+A single-file, dependency-free loading experience for a fictional GenLayer Portal. The page opens with a full-screen GenLayer symbol assembly animation, then reveals a **GenLayer Signal Observatory** dashboard after 2.6 seconds.
 
-## Concept
+This project is designed as a clean, reusable demo of a realistic portal loading state for AI adjudication networks.
 
-The spinner represents an active GenLayer consensus process.
+## Live Demo
 
-- The rotating outer arc represents ongoing network activity.
-- Three orbiting nodes represent validators or participating agents.
-- The layered geometric core represents GenLayer's layered trust infrastructure.
-- The blue and lavender palette follows the GenLayer visual direction.
+[Open GenLayer Portal](https://keplr32b.github.io/Genlayer-Spinner-test/)
 
-## Requirements Covered
+## Features
 
-- Original animated spinner
-- Standalone web-ready SVG
-- CSS animation
-- Smooth infinite loop
-- Dark background support
-- Light background support
-- Readable at small sizes
-- GenLayer-inspired identity
-- Reduced-motion accessibility support
-- No JavaScript dependencies
+- **Real loading behavior**
+  - Page open → full-screen GenLoader symbol assembly.
+  - After 2.6 seconds → Signal Observatory appears.
+  - “Run consensus pulse” button has a compact real loading state.
+- **Single-file build**
+  - All HTML, CSS, and JavaScript in one `index.html`.
+  - No external CSS, JS, images, fonts, or build setup.
+- **Theme support**
+  - Dark and light theme.
+  - Theme toggle in the top bar.
+- **Replay support**
+  - Fixed “Replay Loading” button to re-test the opening experience.
+- **Mobile-ready**
+  - Responsive layout for phones and tablets.
+  - Reduced motion respected via `prefers-reduced-motion`.
+
+## Structure
+
+```text
+.
+├── index.html        # Single-file Portal + Observatory
+└── README.md         # This file
+
+```
+
+## How it works
+
+1. On page load, #portal-loader is visible.
+2. JavaScript runs a short loading sequence:
+
+- Updates title, detail text, and progress bar.
+- After 2.6 seconds, hides the loader and reveals #observatory.
+
+3. Inside the Observatory:
+
+- “Run consensus pulse” triggers a compact GenLayer assembly loader.
+- On success, a new resolution row is added to the evidence streams.
+“Replay Loading” re-runs the full opening sequence.
