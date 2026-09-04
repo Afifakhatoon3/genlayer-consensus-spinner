@@ -1,108 +1,970 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070707">
   <meta
     name="description"
-    content="GenLayer community-designed animated loading spinner."
-  />
+    content="GenLayer Studio concept — a loading experience for an adjudicated intelligence builder workspace."
+  >
+  <title>GenLayer Studio — Loading Experience</title>
 
-  <title>GenLayer Consensus Spinner</title>
+  <style>
+    :root {
+      --cobalt: #110fff;
+      --lavender: #bca2ff;
+      --void: #070707;
+      --ceramic: #f5f5f5;
+      --white: #ffffff;
+      --green: #00ff66;
+      --red: #ff2b2b;
+      --page-bg: #070707;
+      --page-surface: #101010;
+      --page-surface-2: #151515;
+      --page-ink: #ffffff;
+      --page-muted: #9d9d9d;
+      --page-line: rgba(255, 255, 255, 0.11);
+      --page-hover: rgba(255, 255, 255, 0.07);
+      --page-soft: rgba(255, 255, 255, 0.035);
+      --shadow: 0 28px 64px rgba(0, 0, 0, 0.28);
+    }
 
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <main class="page">
-    <header class="hero">
-      <div class="brand-mark" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-      <div>
-        <p class="eyebrow">GENLAYER PORTAL</p>
+    html {
+      min-width: 320px;
+      background: var(--page-bg);
+    }
 
-        <h1>Consensus is loading</h1>
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: var(--page-bg);
+      color: var(--page-ink);
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        system-ui,
+        sans-serif;
+    }
 
-        <p class="subtitle">
-          A community-designed loading spinner for the GenLayer ecosystem.
-        </p>
-      </div>
-    </header>
+    button,
+    a {
+      font: inherit;
+    }
 
-    <section class="showcase" aria-label="Spinner previews">
-      <article class="preview-card dark-card">
-        <span class="label">Dark interface</span>
+    button {
+      cursor: pointer;
+    }
 
-        <div class="spinner-area">
-          <div
-            class="spinner-loader"
-            role="status"
-            aria-live="polite"
-            aria-busy="true"
-          >
-            <span class="sr-only">Loading</span>
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--lavender);
+      outline-offset: 3px;
+    }
 
-            <img
-              src="spinner.svg"
-              alt=""
-              width="116"
-              height="116"
-            />
-          </div>
-        </div>
+    /* =========================================================
+       Initial full-screen portal loader: Consensus Assembly
+       ========================================================= */
 
-        <span class="status">Connecting validators</span>
-      </article>
+    #portal-loader {
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      display: grid;
+      overflow: hidden;
+      place-items: center;
+      background: var(--void);
+      transition: opacity 0.58s ease, visibility 0.58s ease;
+    }
 
-      <article class="preview-card light-card">
-        <span class="label">Light interface</span>
+    #portal-loader::before {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+      background-size: 46px 46px;
+      content: "";
+      opacity: 0.35;
+      mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+    }
 
-        <div class="spinner-area">
-          <div
-            class="spinner-loader"
-            role="status"
-            aria-live="polite"
-            aria-busy="true"
-          >
-            <span class="sr-only">Loading</span>
+    #portal-loader::after {
+      position: absolute;
+      width: min(580px, 120vw);
+      height: min(580px, 120vw);
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(17, 15, 255, 0.22) 0%,
+        rgba(188, 162, 255, 0.09) 37%,
+        transparent 72%
+      );
+      content: "";
+      filter: blur(10px);
+      pointer-events: none;
+    }
 
-            <img
-              src="spinner.svg"
-              alt=""
-              width="116"
-              height="116"
-            />
-          </div>
-        </div>
+    #portal-loader.is-hidden {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
 
-        <span class="status">Resolving state</span>
-      </article>
-    </section>
+    .loader-brand {
+      position: absolute;
+      top: 28px;
+      left: 32px;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 680;
+      letter-spacing: -0.04em;
+    }
 
-    <section class="details" aria-label="Spinner features">
-      <div>
-        <strong>SVG + CSS</strong>
-        <span>Lightweight asset</span>
-      </div>
+    .loader-brand svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
 
-      <div>
-        <strong>Infinite loop</strong>
-        <span>Smooth motion</span>
-      </div>
+    .loader-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      width: min(420px, calc(100% - 48px));
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
 
-      <div>
-        <strong>Responsive</strong>
-        <span>16px to 116px</span>
-      </div>
-    </section>
+    .assembly-spinner {
+      position: relative;
+      width: 116px;
+      height: 108px;
+      margin-bottom: 29px;
+      filter: drop-shadow(0 0 19px rgba(17, 15, 255, 0.28));
+    }
 
-    <footer>
-      Original community concept for the GenLayer Portal spinner mission.
-    </footer>
-  </main>
-</body>
-</html>
+    .assembly-spinner svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .mark-base {
+      fill: var(--lavender);
+      opacity: 0.1;
+    }
+
+    .mark-part {
+      fill: url(#assembly-gradient);
+      transform-box: fill-box;
+      transform-origin: center;
+      will-change: transform, opacity;
+    }
+
+    .mark-left {
+      animation: consensus-left 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    }
+
+    .mark-right {
+      animation: consensus-right 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    }
+
+    .mark-core {
+      animation: consensus-core 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    }
+
+    @keyframes consensus-left {
+      0%,
+      22% {
+        opacity: 0.16;
+        transform: translate(-18px, 10px) rotate(-15deg);
+      }
+
+      49%,
+      74% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0deg);
+      }
+
+      100% {
+        opacity: 0.16;
+        transform: translate(-18px, 10px) rotate(-15deg);
+      }
+    }
+
+    @keyframes consensus-right {
+      0%,
+      22% {
+        opacity: 0.16;
+        transform: translate(18px, 10px) rotate(15deg);
+      }
+
+      49%,
+      74% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0deg);
+      }
+
+      100% {
+        opacity: 0.16;
+        transform: translate(18px, 10px) rotate(15deg);
+      }
+    }
+
+    @keyframes consensus-core {
+      0%,
+      28% {
+        opacity: 0.12;
+        transform: translate(0, -14px) scale(0.62);
+      }
+
+      53%,
+      74% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+
+      100% {
+        opacity: 0.12;
+        transform: translate(0, -14px) scale(0.62);
+      }
+    }
+
+    .sheen-group {
+      mask: url(#symbol-mask);
+    }
+
+    .sheen-bar {
+      opacity: 0;
+      animation: consensus-sheen 2.6s ease-in-out infinite;
+    }
+
+    @keyframes consensus-sheen {
+      0%,
+      50% {
+        opacity: 0;
+        transform: translateX(-130px);
+      }
+
+      58% {
+        opacity: 0.74;
+      }
+
+      72% {
+        opacity: 0.74;
+        transform: translateX(130px);
+      }
+
+      82%,
+      100% {
+        opacity: 0;
+        transform: translateX(130px);
+      }
+    }
+
+    .loader-kicker {
+      margin-bottom: 10px;
+      color: var(--lavender);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .loader-title {
+      min-height: 42px;
+      margin-bottom: 10px;
+      color: var(--white);
+      font-size: clamp(30px, 7vw, 43px);
+      font-weight: 620;
+      letter-spacing: -0.065em;
+      line-height: 1;
+    }
+
+    .loader-detail {
+      min-height: 44px;
+      max-width: 328px;
+      color: #a7a7a7;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .loader-progress {
+      width: 100%;
+      height: 3px;
+      margin-top: 31px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .loader-progress span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--cobalt), var(--lavender));
+      box-shadow: 0 0 20px rgba(17, 15, 255, 0.9);
+      transition: width 0.48s ease;
+    }
+
+    .loader-footer {
+      position: absolute;
+      bottom: 28px;
+      z-index: 2;
+      color: #777777;
+      font-size: 11px;
+      letter-spacing: 0.02em;
+    }
+
+    /* =========================================================
+       Dummy GenLayer Studio builder workspace
+       ========================================================= */
+
+    .studio-app {
+      display: flex;
+      min-height: 100vh;
+      opacity: 0;
+      transition: opacity 0.58s ease;
+    }
+
+    .studio-app.is-visible {
+      opacity: 1;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      display: flex;
+      width: 240px;
+      height: 100vh;
+      flex: 0 0 auto;
+      flex-direction: column;
+      padding: 24px 14px;
+      border-right: 1px solid var(--page-line);
+      background: var(--page-bg);
+    }
+
+    .studio-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 10px;
+      color: var(--page-ink);
+      font-size: 16px;
+      font-weight: 680;
+      letter-spacing: -0.04em;
+      text-decoration: none;
+    }
+
+    .studio-brand svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    .studio-brand small {
+      margin-left: 3px;
+      color: var(--page-muted);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .workspace-switcher {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      width: 100%;
+      margin: 32px 0 20px;
+      padding: 11px 12px;
+      border: 1px solid var(--page-line);
+      border-radius: 11px;
+      background: var(--page-surface);
+      color: var(--page-ink);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .workspace-switcher span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .workspace-switcher svg {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.7;
+    }
+
+    .nav-label {
+      margin: 0 10px 8px;
+      color: var(--page-muted);
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .studio-nav {
+      display: grid;
+      gap: 3px;
+    }
+
+    .studio-nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 11px;
+      border-radius: 9px;
+      color: var(--page-muted);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 180ms ease, color 180ms ease;
+    }
+
+    .studio-nav a:hover,
+    .studio-nav a.is-active {
+      background: var(--page-hover);
+      color: var(--page-ink);
+    }
+
+    .studio-nav svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+
+    .network-status {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: auto;
+      padding: 12px;
+      border: 1px solid var(--page-line);
+      border-radius: 11px;
+      background: var(--page-surface);
+    }
+
+    .network-status i {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 11px rgba(0, 255, 102, 0.76);
+    }
+
+    .network-status div {
+      display: grid;
+      gap: 2px;
+    }
+
+    .network-status strong {
+      font-size: 11px;
+    }
+
+    .network-status span {
+      color: var(--page-muted);
+      font-size: 10px;
+    }
+
+    .studio-main {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .topbar {
+      display: flex;
+      min-height: 70px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 38px;
+      border-bottom: 1px solid var(--page-line);
+      background: color-mix(in srgb, var(--page-bg) 90%, transparent);
+      backdrop-filter: blur(14px);
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--page-muted);
+      font-size: 12px;
+    }
+
+    .breadcrumb strong {
+      color: var(--page-ink);
+      font-weight: 650;
+    }
+
+    .breadcrumb span {
+      color: #777777;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-button {
+      display: grid;
+      width: 35px;
+      height: 35px;
+      padding: 0;
+      place-items: center;
+      border: 1px solid var(--page-line);
+      border-radius: 9px;
+      background: transparent;
+      color: var(--page-ink);
+    }
+
+    .icon-button svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+
+    .wallet-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 35px;
+      padding: 0 11px;
+      border: 1px solid var(--page-line);
+      border-radius: 9px;
+      background: var(--page-surface);
+      color: var(--page-ink);
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .wallet-button i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .studio-content {
+      width: min(1260px, 100%);
+      margin: 0 auto;
+      padding: 42px 38px 56px;
+    }
+
+    .content-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 29px;
+    }
+
+    .eyebrow {
+      margin-bottom: 8px;
+      color: var(--lavender);
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .content-heading h1 {
+      font-size: clamp(31px, 4vw, 46px);
+      font-weight: 630;
+      letter-spacing: -0.065em;
+      line-height: 0.96;
+    }
+
+    .content-heading p:last-child {
+      max-width: 485px;
+      margin-top: 11px;
+      color: var(--page-muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .create-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 41px;
+      padding: 0 14px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--cobalt);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: filter 180ms ease, transform 180ms ease;
+    }
+
+    .create-button:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .create-button svg {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-width: 2;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 13px;
+      margin-bottom: 13px;
+    }
+
+    .metric-card {
+      min-height: 146px;
+      padding: 19px;
+      border: 1px solid var(--page-line);
+      border-radius: 16px;
+      background: var(--page-surface);
+    }
+
+    .metric-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 25px;
+    }
+
+    .metric-card-top span {
+      color: var(--page-muted);
+      font-size: 12px;
+    }
+
+    .metric-icon {
+      display: grid;
+      width: 31px;
+      height: 31px;
+      place-items: center;
+      border-radius: 9px;
+    }
+
+    .metric-icon--blue {
+      background: rgba(17, 15, 255, 0.17);
+      color: var(--lavender);
+    }
+
+    .metric-icon--green {
+      background: rgba(0, 255, 102, 0.12);
+      color: var(--green);
+    }
+
+    .metric-icon--violet {
+      background: rgba(188, 162, 255, 0.15);
+      color: var(--lavender);
+    }
+
+    .metric-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+
+    .metric-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 27px;
+      font-weight: 630;
+      letter-spacing: -0.05em;
+    }
+
+    .metric-card small {
+      color: var(--page-muted);
+      font-size: 11px;
+    }
+
+    .metric-card small b {
+      color: var(--green);
+      font-weight: 650;
+    }
+
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(290px, 0.82fr);
+      gap: 13px;
+    }
+
+    .panel {
+      border: 1px solid var(--page-line);
+      border-radius: 16px;
+      background: var(--page-surface);
+    }
+
+    .projects-panel,
+    .request-panel {
+      min-height: 372px;
+      padding: 20px;
+    }
+
+    .panel-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .panel-heading h2 {
+      margin-top: 5px;
+      font-size: 19px;
+      font-weight: 630;
+      letter-spacing: -0.045em;
+    }
+
+    .panel-link {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--lavender);
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .project-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .project-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px;
+      border: 1px solid var(--page-line);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--page-bg) 30%, transparent);
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .project-item:hover {
+      border-color: rgba(188, 162, 255, 0.38);
+      transform: translateY(-1px);
+    }
+
+    .project-icon {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      place-items: center;
+      border-radius: 10px;
+      background: rgba(17, 15, 255, 0.17);
+      color: var(--lavender);
+    }
+
+    .project-icon svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+
+    .project-item div:nth-child(2) {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .project-item strong {
+      display: block;
+      margin-bottom: 3px;
+      overflow: hidden;
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: -0.015em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .project-item span {
+      color: var(--page-muted);
+      font-size: 10px;
+    }
+
+    .project-state {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--green) !important;
+      font-size: 10px !important;
+      font-weight: 650;
+    }
+
+    .project-state::before {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      content: "";
+    }
+
+    .request-panel {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .request-description {
+      margin-bottom: 20px;
+      color: var(--page-muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .request-preview {
+      display: grid;
+      gap: 7px;
+      margin-bottom: 16px;
+      padding: 14px;
+      border: 1px solid var(--page-line);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--page-bg) 30%, transparent);
+    }
+
+    .request-preview span {
+      color: var(--page-muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .request-preview strong {
+      font-size: 13px;
+      font-weight: 630;
+      letter-spacing: -0.02em;
+    }
+
+    .run-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 45px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--cobalt);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      transition: filter 180ms ease;
+    }
+
+    .run-button:hover {
+      filter: brightness(1.1);
+    }
+
+    .run-button-loading {
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .run-button.is-loading .run-button-label {
+      display: none;
+    }
+
+    .run-button.is-loading .run-button-loading {
+      display: inline-flex;
+    }
+
+    .run-button.is-success {
+      background: #068a45;
+    }
+
+    .compact-loader {
+      width: 17px;
+      height: 17px;
+      color: var(--white);
+    }
+
+    .compact-loader svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .button-part {
+      fill: currentColor;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .button-left {
+      animation: compact-build 1.2s linear infinite;
+    }
+
+    .button-right {
+      animation: compact-build 1.2s linear 0.16s infinite;
+    }
+
+    .button-core {
+      animation: compact-build 1.2s linear 0.32s infinite;
+    }
+
+    @keyframes compact-build {
+      0%,
+      15% {
+        opacity: 0.16;
+      }
+
+      30%,
+      58% {
+        opacity: 1;
+      }
+
+      78%,
+      100% {
+        opacity: 0.16;
+      }
+    }
+
+    .request-status {
+      min-height: 18px;
+      mar
